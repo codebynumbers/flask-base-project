@@ -14,6 +14,19 @@ def insert():
     db.session.commit()
     return redirect(url_for('main.list'))
 
+@main.route('/new/<new>')
+def new(new):
+    e = Entry(title=new, body=new)
+    e.save()
+    return redirect(url_for('main.list'))
+
+@main.route('/change/<old>/<new>')
+def change(old, new):
+    e = Entry.query.filter(Entry.title==old).first()
+    e.title=new
+    e.save()
+    return redirect(url_for('main.list'))
+
 @main.route('/list')
 def list():
     entries = Entry.query.all()
